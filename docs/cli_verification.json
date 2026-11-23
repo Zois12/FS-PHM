@@ -1,0 +1,46 @@
+[
+  {
+    "module": "model.train_pretrain",
+    "exit_code": 0
+  },
+  {
+    "module": "model.train_finetune",
+    "exit_code": 0
+  },
+  {
+    "module": "model.train_fd_full",
+    "exit_code": 0
+  },
+  {
+    "module": "model.train_rul_full",
+    "exit_code": 0
+  },
+  {
+    "module": "model.train_rul_frozen",
+    "exit_code": 0
+  },
+  {
+    "module": "model.make_fd_split",
+    "exit_code": 0
+  },
+  {
+    "module": "model.make_few_shot",
+    "exit_code": 0
+  },
+  {
+    "module": "model.paper_baselines",
+    "exit_code": 0
+  },
+  {
+    "module": "model.paper_baselines.pretrain",
+    "exit_code": 0
+  },
+  {
+    "module": "model.paper_baselines.rmgpt.pretrain",
+    "exit_code": 0
+  },
+  {
+    "module": "model.paper_baselines.rmgpt.finetune",
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.vscode/
+splitData/
+runs/
+checkpoints/
+*.pt
+*.pth
+*.h5
+*.npy
+*.npz
+*.log

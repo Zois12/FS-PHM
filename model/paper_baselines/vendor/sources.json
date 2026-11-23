@@ -1,0 +1,1134 @@
+{
+  "sc_mamba": {
+    "archive": "fd_few-shot-mamba-main.zip",
+    "archive_sha256": "078d85cad6fc77a01b87903b234904209a8e0fb81c984503737a178667b06cca",
+    "files": [
+      {
+        "path": "CWRU/CWRU_dataset.py",
+        "original_sha256": "8190f0b376932ff7680e456cfc7ba088efdada523c53e3aef89f69789601be97",
+        "adapted_sha256": "8190f0b376932ff7680e456cfc7ba088efdada523c53e3aef89f69789601be97",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "HUST_bearing/HUST_dataset.py",
+        "original_sha256": "70bbd808f34708058ba96c7df2b2b16c9b04cee3ac90cd0cc391f673a3906b8f",
+        "adapted_sha256": "70bbd808f34708058ba96c7df2b2b16c9b04cee3ac90cd0cc391f673a3906b8f",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "README.md",
+        "original_sha256": "e550bc39f886abf4819b9465f818340bd9168fe04b472ce989f4bdbb61e1ac1d",
+        "adapted_sha256": "e550bc39f886abf4819b9465f818340bd9168fe04b472ce989f4bdbb61e1ac1d",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "dataloader/dataloader.py",
+        "original_sha256": "8c7499ef9f7d040abd321e888c904f1c7bb96a05e0634a2c9023a8a129e57c93",
+        "adapted_sha256": "8c7499ef9f7d040abd321e888c904f1c7bb96a05e0634a2c9023a8a129e57c93",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "function/function.py",
+        "original_sha256": "3216e0d2bfa1f885114c5b05022d387c71479edc70f2a244b2c38d970125b788",
+        "adapted_sha256": "3216e0d2bfa1f885114c5b05022d387c71479edc70f2a244b2c38d970125b788",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "net/corr_sim.py",
+        "original_sha256": "af2b34488b3f7819d7c563b13f22e260f3cbb201284d3b971ffe90c47aa31197",
+        "adapted_sha256": "af2b34488b3f7819d7c563b13f22e260f3cbb201284d3b971ffe90c47aa31197",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "net/feature_extractor.py",
+        "original_sha256": "bdd0aa848016aa13abe8db3f972a48996a8bd47dd9de9eab71d5731ead127875",
+        "adapted_sha256": "27b727ebb64e9f87773ad6c7c9e5c0b1459b197abecd6635aa1874b4d318871e",
+        "modified": true,
+        "compatibility_patches": [
+          "Spatial softmax per example; original Softmax2d on B,H,W mixed independent minibatch examples"
+        ]
+      },
+      {
+        "path": "net/glca.py",
+        "original_sha256": "7d82d2fa0b4439335e8ac289e485ebfdf02248c99c81a1f059e024d74fe1c4bb",
+        "adapted_sha256": "7d82d2fa0b4439335e8ac289e485ebfdf02248c99c81a1f059e024d74fe1c4bb",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "net/mamba.py",
+        "original_sha256": "55def82f0ce9d7d845c9f2c0c5f3c228d3ca1bf110693dadffcf8a0c9df43861",
+        "adapted_sha256": "ab5c0b3190084de0a0cff2b80161814c7f568039b53f746f9a71756b1833265d",
+        "modified": true,
+        "compatibility_patches": [
+          "Remove timm/torchvision dependency for utility functions"
+        ]
+      },
+      {
+        "path": "net/new_proposed.py",
+        "original_sha256": "964391176be9466e5b6e08537b34ded4d86be8fc1d91f64e13dd961b02dec02b",
+        "adapted_sha256": "029ec59a38d67bc2dc34c28770ca4220f95ace109656e093be0c72c547c8bb65",
+        "modified": true,
+        "compatibility_patches": [
+          "Remove unused dependency",
+          "Remove unused dependency"
+        ]
+      },
+      {
+        "path": "preprocessing_bearing.py",
+        "original_sha256": "968dea12763a01727ed2d264e27499ee9ad06fabd97ccb62c663d1d95baf1274",
+        "adapted_sha256": "968dea12763a01727ed2d264e27499ee9ad06fabd97ccb62c663d1d95baf1274",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "requirements.txt",
+        "original_sha256": "c41c71d1ffcdb4cc44d1b9a1330f8b5c2b78aa36876a7330f0186338e19117e3",
+        "adapted_sha256": "c41c71d1ffcdb4cc44d1b9a1330f8b5c2b78aa36876a7330f0186338e19117e3",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_1shot.py",
+        "original_sha256": "aa020064a76ba60597206eb7d4f10bb6728b4138e65ad1c46d258349e35de8a6",
+        "adapted_sha256": "ab9bebe83b009319eac91412a965fb834bb5d434f2cd91b767859d8e491f2d3a",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_5shot.py",
+        "original_sha256": "1b910d83670266710cc51ccade40ed92f8886fabacbdd5acc06b00b7b82299f7",
+        "adapted_sha256": "8155f7e76473ddb9351d68f01c6ea029fa99225ce0ea25e2026f4471e0dd8ac1",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "train_1shot.py",
+        "original_sha256": "0955b9453778a3bd2efed7706fca5e5a8a59134a00bd8624b50fd943fbb78f5b",
+        "adapted_sha256": "ccb35c5df489280c3e60150ec5401ae07a9609b059062d1dbcc0035ed47534c4",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "train_5shot.py",
+        "original_sha256": "7e43364178b8346e247ccbe708b5d1ad0c684b93375bd609e1e8541db6a69899",
+        "adapted_sha256": "f7094863f760b41e802678c36516f8673714394bddbc1de4636b958e8726c54d",
+        "modified": true,
+        "compatibility_patches": []
+      }
+    ]
+  },
+  "unifault": {
+    "archive": "fd_UniFault-main.zip",
+    "archive_sha256": "c08f1051ca5a0afd5d5e4e2764fb3b5e294b803bfe09bac9641531b40c932959",
+    "files": [
+      {
+        "path": "LICENSE",
+        "original_sha256": "346767bc5a3dd1fc37f9b0b82f0822236d496dca0174ab144df58c711dcd92bd",
+        "adapted_sha256": "346767bc5a3dd1fc37f9b0b82f0822236d496dca0174ab144df58c711dcd92bd",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "README.md",
+        "original_sha256": "72e1323bd7e5834b1eee03a8232ad36e8b0a4dd0e7f2fe5064ff664250c6ff14",
+        "adapted_sha256": "72e1323bd7e5834b1eee03a8232ad36e8b0a4dd0e7f2fe5064ff664250c6ff14",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "data_preprocessing/Preprocessing_README.md",
+        "original_sha256": "a685007566ca0876a79f7fa6814377d9a45a670604fd5e3e5002aaf822d8dfde",
+        "adapted_sha256": "a685007566ca0876a79f7fa6814377d9a45a670604fd5e3e5002aaf822d8dfde",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "data_preprocessing/convert_data_to_parquet.py",
+        "original_sha256": "6ceab2f1d1689b9097d9cd32668cd00020611794639537b9f668009b1e6394ab",
+        "adapted_sha256": "6ceab2f1d1689b9097d9cd32668cd00020611794639537b9f668009b1e6394ab",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "data_preprocessing/preprocess_general.py",
+        "original_sha256": "c97cc92262706a4a5ee301e907732d98d6d71f38cc953bd58476a5159d4daea5",
+        "adapted_sha256": "c97cc92262706a4a5ee301e907732d98d6d71f38cc953bd58476a5159d4daea5",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "datalaoders/train_dataloader.py",
+        "original_sha256": "ac09444c0f15082ff799b055a5bedfa87670754aba088a15c671729203e218ce",
+        "adapted_sha256": "ac09444c0f15082ff799b055a5bedfa87670754aba088a15c671729203e218ce",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "fine_tune.py",
+        "original_sha256": "959bce68a33e7ffc1990a080015ffb6df17b2b0fe46794cdbd892f11fbf901ad",
+        "adapted_sha256": "900067463aafe56cc9051d371497f66430439a2047913d982bb9f82ca9963de3",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "model/Transformer_utils.py",
+        "original_sha256": "89fff650b9bdd28f4ca437a7d086603266dce8071b803352954faf891d91547d",
+        "adapted_sha256": "89fff650b9bdd28f4ca437a7d086603266dce8071b803352954faf891d91547d",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "model/model.py",
+        "original_sha256": "d3c13493a6153eccc0c2b14b3dadf6c43f53c3325fe57f07f90e287300d0a622",
+        "adapted_sha256": "8cfe16da170f72a2b03d02f41958652acd80a2e032294a69aec71f468cdd35ad",
+        "modified": true,
+        "compatibility_patches": [
+          "Use nn.Module without Lightning trainer dependency",
+          "Plain module base; numerical architecture unchanged",
+          "Local equivalent stochastic depth"
+        ]
+      },
+      {
+        "path": "utils.py",
+        "original_sha256": "87e6f4441ddca3bd99693fc259c94062640acef0b2c627a5e78fa448305f784d",
+        "adapted_sha256": "87e6f4441ddca3bd99693fc259c94062640acef0b2c627a5e78fa448305f784d",
+        "modified": false,
+        "compatibility_patches": []
+      }
+    ]
+  },
+  "wdcnn": {
+    "archive": "fd_wdcnn_bearning_fault_diagnosis-master.zip",
+    "archive_sha256": "5a34b06363b7c1984501b44c4f11fe3af4ff0d480f4cc3753e446cb2030c3497",
+    "files": [
+      {
+        "path": "LICENSE",
+        "original_sha256": "c459dbb7adedbbb405da5aa7d6862842950ea535c4de6c9a4b228ab09c940b1e",
+        "adapted_sha256": "c459dbb7adedbbb405da5aa7d6862842950ea535c4de6c9a4b228ab09c940b1e",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "README.md",
+        "original_sha256": "9a84ccf0b4c2ba1b353ec3e59931b422a212206579bf0cb79c5369b864a8d245",
+        "adapted_sha256": "7757895462320506e67a1b8793fb04ecf23de54a432fe758dc94d87e634e5078",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "__init__.py",
+        "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "adapted_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "main.py",
+        "original_sha256": "0e6840884904e5b8c09b498aab7440e960274b999eb0a463c5b9d71064e728be",
+        "adapted_sha256": "0e6840884904e5b8c09b498aab7440e960274b999eb0a463c5b9d71064e728be",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "preprocess.py",
+        "original_sha256": "39b0c2dc52b82de96ee7de61b8ec0dd41cc77db670f60d00089af2ba91080b5b",
+        "adapted_sha256": "39b0c2dc52b82de96ee7de61b8ec0dd41cc77db670f60d00089af2ba91080b5b",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "requirement.txt",
+        "original_sha256": "ce3e3b9cff119bc63ef91c739659e502a4eaf9a1c14e1cfd57e600e47b94e79e",
+        "adapted_sha256": "ce3e3b9cff119bc63ef91c739659e502a4eaf9a1c14e1cfd57e600e47b94e79e",
+        "modified": false,
+        "compatibility_patches": []
+      }
+    ]
+  },
+  "moment_community": {
+    "archive": "phm_RmGPT-main.zip",
+    "archive_sha256": "ca9419bb3d4ee3d6eb7f541c80c319acf96a3a880b42890eaf4d63f862871623",
+    "files": [
+      {
+        "path": "README.md",
+        "original_sha256": "8d3f3e702074cb968a21d675ca58f1bc12bf79d24799233ce187d1222ce3fc78",
+        "adapted_sha256": "8d3f3e702074cb968a21d675ca58f1bc12bf79d24799233ce187d1222ce3fc78",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "scripts/evaluate.py",
+        "original_sha256": "8fe64db12aefa04e9bbb15cfdbf617cae8020a14f48881a198b2ffc63c357e58",
+        "adapted_sha256": "85a5cac32cbfb1393351d9f4b7ff333869699dc9f987b07d1c6b6537071528c6",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "scripts/process_data.py",
+        "original_sha256": "83f05d46b218f17b8b84aab9edd2b6ff62a52e46d6a2961f7dead69a426699c0",
+        "adapted_sha256": "83f05d46b218f17b8b84aab9edd2b6ff62a52e46d6a2961f7dead69a426699c0",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "scripts/process_manual_cwru.py",
+        "original_sha256": "d76821cc141ab27367541f43613124a89656618b520526d3eb7edc87d1a70ab0",
+        "adapted_sha256": "d76821cc141ab27367541f43613124a89656618b520526d3eb7edc87d1a70ab0",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "scripts/process_manual_xjtu.py",
+        "original_sha256": "e933fb6b1c8fb017156f22dfbb0d3dc59af66193eb5d81fe8efb11254f6336ec",
+        "adapted_sha256": "e933fb6b1c8fb017156f22dfbb0d3dc59af66193eb5d81fe8efb11254f6336ec",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "scripts/process_xjtu_labeled.py",
+        "original_sha256": "f5d3c63664d45724eee017d08a8f4d74f1636e62df935189ea1015dae5d23f7a",
+        "adapted_sha256": "f5d3c63664d45724eee017d08a8f4d74f1636e62df935189ea1015dae5d23f7a",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/__init__.py",
+        "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "adapted_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/data/npy_dataset.py",
+        "original_sha256": "8281db2f7f1e3a892d07ce7e8f4a9a39cb63e2b9223cfdbdb42db35caf4476bb",
+        "adapted_sha256": "8281db2f7f1e3a892d07ce7e8f4a9a39cb63e2b9223cfdbdb42db35caf4476bb",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/data/supervised_dataset.py",
+        "original_sha256": "13eb6f15fecea6a2ad127e5320f8fbb7500e5b36ad00b514f01197372a66e070",
+        "adapted_sha256": "13eb6f15fecea6a2ad127e5320f8fbb7500e5b36ad00b514f01197372a66e070",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/mymoment/__init__.py",
+        "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "adapted_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/mymoment/model/__init__.py",
+        "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "adapted_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/mymoment/model/layers.py",
+        "original_sha256": "41e5362c172b6f7febc5eab4c9a5bec0b8dbeb0e634643f44542061f7e69b057",
+        "adapted_sha256": "41e5362c172b6f7febc5eab4c9a5bec0b8dbeb0e634643f44542061f7e69b057",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/mymoment/model/masking.py",
+        "original_sha256": "c07df702eb653cc0737077fef90eb73c0606db249eee5a225a17696c0401f0a9",
+        "adapted_sha256": "c07df702eb653cc0737077fef90eb73c0606db249eee5a225a17696c0401f0a9",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/mymoment/model/moment.py",
+        "original_sha256": "709d96d82e07424e0293d8602176b41ced03141f3bea49d7f58b1ed47222f9e6",
+        "adapted_sha256": "709d96d82e07424e0293d8602176b41ced03141f3bea49d7f58b1ed47222f9e6",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/mymoment/model/outputs.py",
+        "original_sha256": "ff92e2d38b9396623f58aaf33a416cc6be114db1313112ae5082621103e98912",
+        "adapted_sha256": "ff92e2d38b9396623f58aaf33a416cc6be114db1313112ae5082621103e98912",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/training/finetune.py",
+        "original_sha256": "eccb1a7d0d592fcb6deea68e4aac45b5b0f4fc939d00745e4819d8ce7e705fce",
+        "adapted_sha256": "52d328b2f59cb8813dca7a2f6c5e47278dcf0153f99c75fcef32cd621aea2f8a",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/training/finetune_fewshot_single.py",
+        "original_sha256": "5a55572c3f0ef6800950c5083efde184a95a2e312ef6ccb6018e43dc53c05d48",
+        "adapted_sha256": "e0d0ae72aea630d5f61cca31db447f9a01cb6f8b59577df4590acb05c6cb9229",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/training/finetune_fewshot_xjtu.py",
+        "original_sha256": "57ebb4b97f0dfa9399488a60f0dc46630f2377744a429be415b36c3c116f9de9",
+        "adapted_sha256": "4dbab58f4e5aeb666d5515e4cf2a4d5bb6b666aa7be55103843e72d9e74eb682",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/training/finetune_robot_sim2real.py",
+        "original_sha256": "d344482d43917b2810a025fad9c7d259b319070413fc6b90ad909f5ef8036b93",
+        "adapted_sha256": "d15af173491364186172622706e065462818e8c670a58a726a34db7c1d5f33df",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/training/pretrain.py",
+        "original_sha256": "d83c4a107c36c97c0d958b88fd557da42127fd10f5eb4e34c31731fe3aeeeb72",
+        "adapted_sha256": "a9aea9a3daa9fee6978f6cfc4f73592b6b73a5d07bfa312cb2339656e569757d",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "src/training/pretrain_single.py",
+        "original_sha256": "6d434617f785ce33ea7f29337ffbb95a9d59511d741ffdee84e4c84c2d54f54e",
+        "adapted_sha256": "524a3af49abf94887dc5107829ec824d94ee6be9f09d52bd3345281905beadee",
+        "modified": true,
+        "compatibility_patches": []
+      }
+    ]
+  },
+  "da_rul": {
+    "archive": "rul_DA-RUL-main.zip",
+    "archive_sha256": "1f7ca7a91e8bf3666ccd51baca17e90bff69f6990e80a5fe180db436c03feaa2",
+    "files": [
+      {
+        "path": "Experiment/DAT_Experiment.py",
+        "original_sha256": "36385ceff097604dd75bb18a2e108758e4218a0580aa337f12af22a280db2207",
+        "adapted_sha256": "0192021accc229572f8507b2bed36d20c8f0b6e92940196268aebe1d9cf8153d",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "Experiment/Early_Stopping.py",
+        "original_sha256": "4a0540c7547a742254e4a80357fe8ed5b9a7712fd40d3cdbaac090a720e9ea61",
+        "adapted_sha256": "4a0540c7547a742254e4a80357fe8ed5b9a7712fd40d3cdbaac090a720e9ea61",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "Experiment/Experiment_DA.py",
+        "original_sha256": "c46401be65746e01d2558fdfa00ad150b22f0381dfc17c91b12c21b371601ba7",
+        "adapted_sha256": "56123689420ae3995507ebd4e4c5b77a719a81d3e8a13ab4bfe255087f2b775f",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "Experiment/HTS_Loss_Function.py",
+        "original_sha256": "b60f38e23bcb9062dda91d1733957f3fab3e7142124c7053f6fc89a5f1f3dc2c",
+        "adapted_sha256": "b60f38e23bcb9062dda91d1733957f3fab3e7142124c7053f6fc89a5f1f3dc2c",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "Experiment/__init__.py",
+        "original_sha256": "7663b26fc2e95bbc65024c80c46b67ab37e5ed9b56cb0105bba65a4f527a5937",
+        "adapted_sha256": "2f5eace3d84a0f548ef3437ca4503f672b1e57bd8d21ea1b7dcd93b05bef3116",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "Experiment/learining_rate_adjust.py",
+        "original_sha256": "3dc4ab0a7f47318aeb27d357e0abaa7fc2b538f6aa2897cb3ca2cef94eedcf0d",
+        "adapted_sha256": "3dc4ab0a7f47318aeb27d357e0abaa7fc2b538f6aa2897cb3ca2cef94eedcf0d",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "README.md",
+        "original_sha256": "e1cdc0f3b6d02c07e53a97f1a1b3852be9ae63898bdcf7bb1c5673b4b1f9a139",
+        "adapted_sha256": "e1cdc0f3b6d02c07e53a97f1a1b3852be9ae63898bdcf7bb1c5673b4b1f9a139",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "dataset/CMAPSSDataset.py",
+        "original_sha256": "1aec5f3b58ac7082481dcf7d3daa2f767a12bd13c1b0ccefcdd4f73def8f235f",
+        "adapted_sha256": "1aec5f3b58ac7082481dcf7d3daa2f767a12bd13c1b0ccefcdd4f73def8f235f",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "dataset/__init__.py",
+        "original_sha256": "aad36a310370f06ed93fa7a1049acb1fb4d1e2d8d37ea21ec62febb495e3cee0",
+        "adapted_sha256": "58af88c834e5b038d8ed0a24c51ffcb9b3cb2917a745646660783720dd20335c",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "dataset/load_data_XJTU.py",
+        "original_sha256": "7166f0e1ad7eaa27f59536133c80fada7b1f2ea9477970ed06f43c07ff75a9a5",
+        "adapted_sha256": "7166f0e1ad7eaa27f59536133c80fada7b1f2ea9477970ed06f43c07ff75a9a5",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "dataset/load_data_XJTU_sample.py",
+        "original_sha256": "e5f69ebdbfaef0a99f434d3ddd1b5c53d1694a4c8f82ec801adc72255f50bf4c",
+        "adapted_sha256": "e5f69ebdbfaef0a99f434d3ddd1b5c53d1694a4c8f82ec801adc72255f50bf4c",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "layers/Embed.py",
+        "original_sha256": "e11828f2e663d764a6c52c9ad3f1592a50750abc30e13f195ccadea7c8a74d43",
+        "adapted_sha256": "e11828f2e663d764a6c52c9ad3f1592a50750abc30e13f195ccadea7c8a74d43",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "layers/RevIN.py",
+        "original_sha256": "ef7d2e6ed125e3ea1045efa9618819cce5605a57a7ebcad528a09e7690f7a83f",
+        "adapted_sha256": "ef7d2e6ed125e3ea1045efa9618819cce5605a57a7ebcad528a09e7690f7a83f",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "layers/SelfAttention_Family.py",
+        "original_sha256": "864990a3f40f37da6019bd96c1a07a0c1081fd0c5baef861af62833f6b6928c1",
+        "adapted_sha256": "2942dfc9b706f81a9d408276211f4eb8b8d2e939982f4a411e91ccedbc0f791d",
+        "modified": true,
+        "compatibility_patches": [
+          "Preserve head and token axes in degradation distance"
+        ]
+      },
+      {
+        "path": "layers/Transformer_EncDec.py",
+        "original_sha256": "a3bbd9556e3bf3761b6866fd6c7e0db676b3cfaf1a5004c27e049492859653c2",
+        "adapted_sha256": "d307a2b0c2d12662f513ffa67d5edfd3e96b215561b285071871b98073f72168",
+        "modified": true,
+        "compatibility_patches": [
+          "Keep B,N,D between successive encoder layers",
+          "Apply final LayerNorm on embedding axis",
+          "Encoder returns B,N,D to daTransformer"
+        ]
+      },
+      {
+        "path": "lightning_logs/version_0/hparams.yaml",
+        "original_sha256": "88ac772072d86a00c812274dc2a0b5974b13b7989f43f3f59fcf848865ba5088",
+        "adapted_sha256": "88ac772072d86a00c812274dc2a0b5974b13b7989f43f3f59fcf848865ba5088",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "lightning_logs/version_1/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "lightning_logs/version_2/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "lightning_logs/version_3/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "lightning_logs/version_4/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "lightning_logs/version_5/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "lightning_logs/version_6/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "lightning_logs/version_7/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "lightning_logs/version_8/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "model/IMDSSN.py",
+        "original_sha256": "043eb2f2364a6f4e73257ca62242e5ef4892085b7dbb06e82023c8e5e47c872f",
+        "adapted_sha256": "2ad508eab4dedf5fd21a8a75f4b512d7c13935d112349c7451f325e1a6ef2169",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "model/ITransformer.py",
+        "original_sha256": "52af8f6e3d5ba025710af20d57453be4d99cee594bcf0f39841d9fca4a07939c",
+        "adapted_sha256": "3b5509a110c59f87c4cccedbe32a84a0e38d54f03566be4157523b3effe0a314",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "model/MLPMixer.py",
+        "original_sha256": "60b87ff7d888f69d07f9c08add5f06b2a75194647177cd4e98c0e832f00e07e1",
+        "adapted_sha256": "16812794e4a65a971d61ec966fcbbafbd697a6427dd98da8ee05becbe75a4699",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "model/__init__.py",
+        "original_sha256": "d956458ab111461ae881d1a16856c37202e8cd1fa7086a7c00b1be4d85b4f2a6",
+        "adapted_sha256": "d4df156e3ddc37e171f5591390dda68a37b6d5b9270c8318683ce1e92c17b975",
+        "modified": true,
+        "compatibility_patches": [
+          "Remove eager imports of unrelated datasets/trainers"
+        ]
+      },
+      {
+        "path": "model/attn_lstm.py",
+        "original_sha256": "104dd5b4879ddb52ca8ba6f1049505828894191a055e4bc4f64790d1d260d564",
+        "adapted_sha256": "0c3282ad0f0d578a03383d5afa5abca2a138089fed83381035432e2b7a83e320",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "model/daTransformer.py",
+        "original_sha256": "b7ec8bf3f6442728a92fb05f48046e653d75d25133b08150e16bb32afcffdddb",
+        "adapted_sha256": "ac17f0e6feaa1679cac2f33abebf7929873c4efe95ef609db7f4d5cc3e590adc",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "model/utils.py",
+        "original_sha256": "4f3b77402c839156bb24dbe0ca535f39b9c3b19c7faf67be16ee5ed7c1ffd2e6",
+        "adapted_sha256": "4f3b77402c839156bb24dbe0ca535f39b9c3b19c7faf67be16ee5ed7c1ffd2e6",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "model/vTransformer.py",
+        "original_sha256": "6fdbe9b8b57a5e9d37b55be0178086751fb55aee6720eb1a7d8816f2523f03c0",
+        "adapted_sha256": "29bfe7b97b65e9c99c116261e90fdb06bf07f1429def56e5562cf152cd02f197",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "requirements.txt",
+        "original_sha256": "15a1dd634e95e068437324371cbd966fecc4b126a244668e2c0bec0a7f07a01f",
+        "adapted_sha256": "15a1dd634e95e068437324371cbd966fecc4b126a244668e2c0bec0a7f07a01f",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/FD001_TEST.py",
+        "original_sha256": "b16101b5c16b0da5f47c43f2f9ff30cc6e4585dd51eb22376c5150e2d49efc9d",
+        "adapted_sha256": "cb1f221d7f97db4027edf4f1646adb58c608fe3b1f3cc58fdb4cca53f86dae55",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/FD002_TEST.py",
+        "original_sha256": "80dc1a4bdc2ad734c51ba194425173d7cb328f1cd2ea6ba2ff9ae12b93b082b2",
+        "adapted_sha256": "5867d2c4888500de0a81c8a178410fb5fffacf4cef486c8116675c06e033b121",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_0/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_1/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_10/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_11/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_12/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_13/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_14/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_15/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_16/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_17/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_18/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_19/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_2/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_20/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_21/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_22/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_3/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_4/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_5/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_6/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_7/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_8/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "test_script/lightning_logs/version_9/hparams.yaml",
+        "original_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "adapted_sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "train_script/lightning_cmapss_FD00(1-3).py",
+        "original_sha256": "d57e9014289d407ede2c1045dc2529a1a3c3c3a5da16aef8f9dacb32932f5891",
+        "adapted_sha256": "74dc8b43dccf86a75c6d8cec73b234ad864bf3ba8ca8da3ae8a34e73442006a7",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "train_script/lightning_cmapss_FD00(2-4).py",
+        "original_sha256": "7762d4127f1b043c205e4627c1df7c35713d31dcfa63809264bf87a274e55263",
+        "adapted_sha256": "2a7d6ffc970673542604ab75a49f7bdbfea15a06242cb846adfa76cf474642b3",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "utils/DAST_utils.py",
+        "original_sha256": "69d63e39684c7b864c2714aa840a971ad4dbb9ac18f2abf06a5c4d551a9a38a7",
+        "adapted_sha256": "69d63e39684c7b864c2714aa840a971ad4dbb9ac18f2abf06a5c4d551a9a38a7",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "utils/RiskAwareLoss.py",
+        "original_sha256": "cf1c283550ce4b8ad7ec967023a1a5859e9dc412a3a9541506ada2d02845240b",
+        "adapted_sha256": "cf1c283550ce4b8ad7ec967023a1a5859e9dc412a3a9541506ada2d02845240b",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "utils/log_result.py",
+        "original_sha256": "c11de25fc168b4a55c3bf7f321b37a5acec97aff912314ec878978c0a99b5f95",
+        "adapted_sha256": "c11de25fc168b4a55c3bf7f321b37a5acec97aff912314ec878978c0a99b5f95",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "utils/masking.py",
+        "original_sha256": "4c9c5c515b29463580d4a8978315cf3860d6dd1caa0fa7fca3abd458f7d729bc",
+        "adapted_sha256": "4c9c5c515b29463580d4a8978315cf3860d6dd1caa0fa7fca3abd458f7d729bc",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "utils/metrics.py",
+        "original_sha256": "279c5b187b45207495c1814ac644132f104f7609959cdbabf8c5b134c42ac994",
+        "adapted_sha256": "279c5b187b45207495c1814ac644132f104f7609959cdbabf8c5b134c42ac994",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "xLSTM/__init__.py",
+        "original_sha256": "eefdd9420c06a7b83713fb394453e52c89be3648c1beb8be2c80f1e51942e708",
+        "adapted_sha256": "eefdd9420c06a7b83713fb394453e52c89be3648c1beb8be2c80f1e51942e708",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "xLSTM/block.py",
+        "original_sha256": "d365f4f19e4dd92b40e628bc1cc54754a0127797bdb9907f04345c22eebcc776",
+        "adapted_sha256": "d365f4f19e4dd92b40e628bc1cc54754a0127797bdb9907f04345c22eebcc776",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "xLSTM/mlstm.py",
+        "original_sha256": "b725d84880b23b1c526cc3c678c785ed01bd9cd466f6b370887c8108a4335cf4",
+        "adapted_sha256": "b725d84880b23b1c526cc3c678c785ed01bd9cd466f6b370887c8108a4335cf4",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "xLSTM/model.py",
+        "original_sha256": "db93d7eb8d0c1360073cdb1ddf5545e48590aa24aaf6d2d504591ee66dbac111",
+        "adapted_sha256": "db93d7eb8d0c1360073cdb1ddf5545e48590aa24aaf6d2d504591ee66dbac111",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "xLSTM/slstm.py",
+        "original_sha256": "646ab7880de5f74f304deb420b70e264345c90424ed6b71380d5b3278f1589b7",
+        "adapted_sha256": "646ab7880de5f74f304deb420b70e264345c90424ed6b71380d5b3278f1589b7",
+        "modified": false,
+        "compatibility_patches": []
+      }
+    ]
+  },
+  "cnn_bilstm": {
+    "archive": "rul_phm2012_domain_cnn_bi_lstm-main.zip",
+    "archive_sha256": "496d89f55f5f0f2a15e0240ed66c3d8f2768ff4cfb11a031b407780e9d066647",
+    "files": [
+      {
+        "path": "README.md",
+        "original_sha256": "8b377b91cd6d53b80d2325d9354cd090f440d1e05e3e13dc8f5217805ff0112e",
+        "adapted_sha256": "8b377b91cd6d53b80d2325d9354cd090f440d1e05e3e13dc8f5217805ff0112e",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "domain_train.py",
+        "original_sha256": "11ac942043cba92c8a02292c0952e1b0a6ba9f38c152e5560d6428867eb9653d",
+        "adapted_sha256": "11ac942043cba92c8a02292c0952e1b0a6ba9f38c152e5560d6428867eb9653d",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "param_search.py",
+        "original_sha256": "8dad2e29f96d9772225468c8f25cf905cf15786e7aa0e671c79efec5ce9b9ad3",
+        "adapted_sha256": "8dad2e29f96d9772225468c8f25cf905cf15786e7aa0e671c79efec5ce9b9ad3",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "predict.py",
+        "original_sha256": "cc5732d3c37d0e8a4e26fe8abcada03bc5f9e1487b781b7ea5201cb631910cf8",
+        "adapted_sha256": "cc5732d3c37d0e8a4e26fe8abcada03bc5f9e1487b781b7ea5201cb631910cf8",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "rul_domain.py",
+        "original_sha256": "8388d5ffb22cad39c2811f6205564e0cf22ed2e115bd3d3bde31d79c638f2e4b",
+        "adapted_sha256": "8388d5ffb22cad39c2811f6205564e0cf22ed2e115bd3d3bde31d79c638f2e4b",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "rul_main.py",
+        "original_sha256": "254b8247c421986c34b768402914268f5aaaafc86b413fd1f26cc7abfb306535",
+        "adapted_sha256": "254b8247c421986c34b768402914268f5aaaafc86b413fd1f26cc7abfb306535",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "rul_model.py",
+        "original_sha256": "8708b75eff766316310e7120eb7383423f4d9b654ec06f92480b6a6ebdfd83ae",
+        "adapted_sha256": "8708b75eff766316310e7120eb7383423f4d9b654ec06f92480b6a6ebdfd83ae",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "rul_pre_data.py",
+        "original_sha256": "380a8f8cc0046e066a1b74418041780d5a77ef113d32dfa60feb7c74983bf259",
+        "adapted_sha256": "380a8f8cc0046e066a1b74418041780d5a77ef113d32dfa60feb7c74983bf259",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "rul_result_visualize.py",
+        "original_sha256": "9cfe4febd66e6b09c91b0f5197b38c09df52e90877cc69cdfe5b64d8c8af09ff",
+        "adapted_sha256": "9cfe4febd66e6b09c91b0f5197b38c09df52e90877cc69cdfe5b64d8c8af09ff",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "rul_train.py",
+        "original_sha256": "a3f925fc6445d6751b63f2993951498317f1e503b881adc153841e1049239627",
+        "adapted_sha256": "a3f925fc6445d6751b63f2993951498317f1e503b881adc153841e1049239627",
+        "modified": false,
+        "compatibility_patches": []
+      }
+    ]
+  },
+  "dual_mixer": {
+    "archive": "rul_PhmDeepLearningProjects-master.zip",
+    "archive_sha256": "e428660525e656ac02eef9b5f8250ff932ffa45c83ae3defb6a5fc6220676449",
+    "files": [
+      {
+        "path": "LICENSE",
+        "original_sha256": "ffe553f0fc41bb7de1f015632a84db0bf0e9456b7dc5104d0d86f205fbb16ca6",
+        "adapted_sha256": "ffe553f0fc41bb7de1f015632a84db0bf0e9456b7dc5104d0d86f205fbb16ca6",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "dataset/__init__.py",
+        "original_sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "adapted_sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "dataset/cmapss.py",
+        "original_sha256": "c364b9095c22514c8080fc38f7b74f7d000979b9be17af561f975989277dea2f",
+        "adapted_sha256": "bf6e83a1b0d10543579a883a3c2d632dd1186ed117e92097f9b30300f304c20c",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "dataset/utils.py",
+        "original_sha256": "4cb6c1efa4feb53fef71b1b5c43b68420f9f6720cc9ccb2d2a347a5f395d08d1",
+        "adapted_sha256": "4cb6c1efa4feb53fef71b1b5c43b68420f9f6720cc9ccb2d2a347a5f395d08d1",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "models/RULPrediction/BiGRU_TSAM.py",
+        "original_sha256": "4414e48697eba61e333fd2bf2e03475f33f827311c1f8d8fceab5804d8ea6ab2",
+        "adapted_sha256": "4414e48697eba61e333fd2bf2e03475f33f827311c1f8d8fceab5804d8ea6ab2",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "models/RULPrediction/CNN_GRU.py",
+        "original_sha256": "9bbb68a133a70e00da1c25c4626a6fd41e277b732e5c62a8f465d503d19b6489",
+        "adapted_sha256": "b6f352b9c36128210e1706a4e54ec7b64f9173ada33935e826b6029b077477d3",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "models/RULPrediction/ContrastiveModules.py",
+        "original_sha256": "6592b05a595cf72c663af077f88adeaf67e40b169ac28df0c9e57f59f484fc5e",
+        "adapted_sha256": "2c7ae57a4a7ba7e102af1f743367aa6a7cc51470369cfda1c9cba927761778e5",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "models/RULPrediction/DAMCNN.py",
+        "original_sha256": "d979d1af9ef7bd948eae2b70428799a2a317c07df5a68cc676ed560c06432468",
+        "adapted_sha256": "3a2871d4fee4339c0fd69d2b603b9998977c478f153b3b5e39f3dfbfc6de436a",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "models/RULPrediction/IMDSSN.py",
+        "original_sha256": "7411339ad52eccd968af218679ee2df0cbe1d752ae1a9b49109a29cedd857db6",
+        "adapted_sha256": "7411339ad52eccd968af218679ee2df0cbe1d752ae1a9b49109a29cedd857db6",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "models/RULPrediction/MLPMixer.py",
+        "original_sha256": "5feb17c123974b34353fc28eddb602e1f46f7c1dcf15a693ab58289d00e07eb2",
+        "adapted_sha256": "4aade2c5449b1ea4a1947c0e4de8b670698973e6898e43080fab2821cf64aa12",
+        "modified": true,
+        "compatibility_patches": [
+          "Repair sibling import",
+          "Construct on CPU before explicit device placement"
+        ]
+      },
+      {
+        "path": "models/RULPrediction/ResBlockModel.py",
+        "original_sha256": "fd7ba3ea5ce1d65e52ad7c54f38adc0e47c6e1dfb4dc6b0d3eb81a5c3093955c",
+        "adapted_sha256": "7128c89111154b868f8ab5b78073bdbb65b75a144577ebd9851797ef418576b0",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "models/RULPrediction/SimpleModels.py",
+        "original_sha256": "b1a683180413b3fe94f67d678ad50f45d1631c9ff73ffb0dc7663a6ec8750f12",
+        "adapted_sha256": "1c8e477493f59161629e113c30aa0623d13d53d3a35def411a49a6f3a0b49a94",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "models/RULPrediction/__init__.py",
+        "original_sha256": "9ec2126125554eae88964fb34011ff9b2d532433db8761820f5397cd157aaf7a",
+        "adapted_sha256": "d4df156e3ddc37e171f5591390dda68a37b6d5b9270c8318683ce1e92c17b975",
+        "modified": true,
+        "compatibility_patches": [
+          "Remove eager imports of unrelated datasets/trainers"
+        ]
+      },
+      {
+        "path": "models/RULPrediction/experiments.py",
+        "original_sha256": "f71804c3e8fb7e25a09caa31e53ffa1486ba248c3af803cc3d7746422280ab31",
+        "adapted_sha256": "15b928514f9b472cb5ddb4ed7329051360a5894d41edecdbc0ce8008d4cda394",
+        "modified": true,
+        "compatibility_patches": []
+      },
+      {
+        "path": "models/__init__.py",
+        "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "adapted_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "readme.md",
+        "original_sha256": "3ca6e204dda0e4d6336498eb0e90a10627238626f8fd753b8cd6e9c7673e9740",
+        "adapted_sha256": "3ca6e204dda0e4d6336498eb0e90a10627238626f8fd753b8cd6e9c7673e9740",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "train/__init__.py",
+        "original_sha256": "5afd1b6815b62629f344e5e2d527bf9306a030aa60d6c0d23cdbf8bcb4ced5b7",
+        "adapted_sha256": "d4df156e3ddc37e171f5591390dda68a37b6d5b9270c8318683ce1e92c17b975",
+        "modified": true,
+        "compatibility_patches": [
+          "Remove eager imports of unrelated datasets/trainers"
+        ]
+      },
+      {
+        "path": "train/functions.py",
+        "original_sha256": "3dd9e03dbf0eea1ad887fc685ef285e984db88f49b052131a679e6d465562aff",
+        "adapted_sha256": "3dd9e03dbf0eea1ad887fc685ef285e984db88f49b052131a679e6d465562aff",
+        "modified": false,
+        "compatibility_patches": []
+      },
+      {
+        "path": "train/trainable.py",
+        "original_sha256": "573785e8f9939133c7f765ea5f79945128abc5a41dc405d927e32841532e33c5",
+        "adapted_sha256": "573785e8f9939133c7f765ea5f79945128abc5a41dc405d927e32841532e33c5",
+        "modified": false,
+        "compatibility_patches": []
+      }
+    ]
+  }
+}

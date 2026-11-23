@@ -1,0 +1,79 @@
+[
+  {
+    "model": "transformer",
+    "status": "pass",
+    "shape": [
+      2,
+      3
+    ]
+  },
+  {
+    "model": "resnet18",
+    "status": "pass",
+    "shape": [
+      2,
+      3
+    ]
+  },
+  {
+    "model": "cnn_lstm",
+    "status": "pass",
+    "shape": [
+      2,
+      3
+    ]
+  },
+  {
+    "model": "wdcnn",
+    "status": "pass",
+    "shape": [
+      2,
+      3
+    ]
+  },
+  {
+    "model": "unifault",
+    "status": "pass",
+    "shape": [
+      2,
+      3
+    ]
+  },
+  {
+    "model": "da_rul",
+    "status": "pass",
+    "shape": [
+      2
+    ]
+  },
+  {
+    "model": "cnn_bilstm",
+    "status": "pass",
+    "shape": [
+      2
+    ]
+  },
+  {
+    "model": "dual_mixer",
+    "status": "pass",
+    "shape": [
+      2
+    ]
+  },
+  {
+    "model": "moment_community",
+    "status": "pass",
+    "shape": [
+      2,
+      3
+    ]
+  },
+  {
+    "model": "sc_mamba",
+    "status": "pass",
+    "shape": [
+      2,
+      3
+    ]
+  }
+]
