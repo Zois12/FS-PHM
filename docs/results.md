@@ -1,15 +1,14 @@
 # Reference results / 参考结果
 
-These tables summarize existing experiments, not a rerun of the clean export. FD tables are transcribed from the supplied manuscript `论文_引用加入.docx` as available on 2026-11-23; RUL values use the more precise three-seed experiment summary from 2026-11-18. Both use fixed partitions and report training-seed variability.
+FS-PHM results use the Source-Mean calibrated checkpoint and the fixed test partitions. All values are the mean ± sample standard deviation across three training runs. Full uses the entire training pool.
 
-以下 FD 表格来自论文当前版本；RUL 采用三种子原始汇总的较高精度数值。FD 单位为准确率百分比，Full 指固定划分中的整个训练池，不包含测试数据。
+FS-PHM 结果使用 Source-Mean 校准后的检查点及固定测试集。表中为三次训练的均值 ± 样本标准差，Full 指完整训练池。
 
 ## CWRU FD Accuracy (%)
 
 | Model | 1-shot | 4-shot | 8-shot | 16-shot | 10% | Full |
 |---|---:|---:|---:|---:|---:|---:|
-| FS-PHM | 87.77 ± 0.25 | 93.29 ± 0.21 | 94.57 ± 0.13 | 95.29 ± 0.29 | 97.21 ± 0.05 | 99.02 ± 0.08 |
-| FS-PHM + Power Spectrum | 94.15 ± 1.96 | 99.72 ± 0.39 | 99.98 ± 0.03 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| FS-PHM | 86.05 ± 1.42 | 93.39 ± 0.31 | 94.97 ± 0.32 | 95.76 ± 0.37 | 97.23 ± 0.13 | 99.11 ± 0.00 |
 | RmGPT | 39.52 ± 1.90 | 55.22 ± 2.11 | 67.53 ± 5.81 | 83.81 ± 5.12 | 95.88 ± 3.16 | 100.00 ± 0.00 |
 | CNN_LSTM | 24.47 ± 7.99 | 54.08 ± 2.28 | 81.70 ± 3.16 | 92.55 ± 1.70 | 95.90 ± 2.01 | 98.41 ± 1.48 |
 | ResNet18 | 83.23 ± 3.04 | 92.38 ± 1.68 | 92.11 ± 9.14 | 86.54 ± 21.09 | 97.16 ± 1.16 | 98.58 ± 1.48 |
@@ -22,8 +21,7 @@ These tables summarize existing experiments, not a rerun of the clean export. FD
 
 | Model | 1-shot | 4-shot | 8-shot | 16-shot | 10% | Full |
 |---|---:|---:|---:|---:|---:|---:|
-| FS-PHM | 79.09 ± 1.31 | 93.74 ± 1.14 | 96.33 ± 0.76 | 97.64 ± 0.62 | 99.43 ± 0.15 | 99.97 ± 0.06 |
-| FS-PHM + Power Spectrum | 89.12 ± 4.25 | 99.93 ± 0.06 | 99.93 ± 0.06 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| FS-PHM | 89.16 ± 5.65 | 95.15 ± 0.10 | 96.73 ± 0.47 | 97.78 ± 0.51 | 99.26 ± 0.06 | 99.83 ± 0.06 |
 | RmGPT | 23.10 ± 1.77 | 25.99 ± 1.43 | 29.97 ± 3.42 | 33.54 ± 6.98 | 92.22 ± 3.27 | 100.00 ± 0.00 |
 | CNN_LSTM | 41.28 ± 2.67 | 67.14 ± 5.32 | 81.25 ± 6.91 | 94.18 ± 2.08 | 99.49 ± 0.36 | 99.97 ± 0.06 |
 | ResNet18 | 78.96 ± 11.08 | 91.04 ± 8.51 | 98.05 ± 0.62 | 96.33 ± 3.54 | 94.85 ± 8.84 | 100.00 ± 0.00 |
@@ -38,7 +36,7 @@ The training pool contains 206,304 windows from 12 bearings; TEST contains 14,88
 
 | Model | MAE ↓ | MSE ↓ | RMSE ↓ |
 |---|---:|---:|---:|
-| FS-PHM frozen fusion regressor | 0.13158 ± 0.00163 | 0.02624 ± 0.00087 | 0.16196 ± 0.00269 |
+| FS-PHM frozen fusion regressor | 0.13023 ± 0.00387 | 0.02655 ± 0.00136 | 0.16290 ± 0.00418 |
 | DA-RUL adaptation | 0.16829 ± 0.01369 | 0.04800 ± 0.00821 | 0.21859 ± 0.01835 |
 | Transformer | 0.19593 ± 0.01803 | 0.05758 ± 0.01189 | 0.23914 ± 0.02425 |
 | ResNet18 | 0.22271 ± 0.07474 | 0.08682 ± 0.06579 | 0.28177 ± 0.10552 |
@@ -51,14 +49,39 @@ The manuscript's RUL row labeled RmGPT with MAE 0.2620 is corrected here to MOME
 
 RUL figures reflect the full-pool version, not the historical 17,192-window MAE 0.124295 run. The ± statistics describe training-seed variation, not confidence intervals or uncertainty over independent test splits. The fixed test results were viewed during earlier development; they are not presented as a previously unseen blind evaluation.
 
+## Branch and router ablations
+
+The variants share the joint pretraining checkpoint. FD uses one support window per class, and RUL uses the full training pool. Accuracy, macro F1, and macro recall are percentages.
+
+| Variant | CWRU Acc. | CWRU F1 | CWRU Recall | UO Acc. | UO F1 | UO Recall | XJTU MAE | XJTU MSE | XJTU RMSE |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Without fast | 78.58 ± 2.77 | 71.72 ± 3.55 | 74.54 ± 3.30 | 85.56 ± 1.67 | 84.92 ± 1.80 | 85.56 ± 1.67 | 0.13684 ± 0.00569 | 0.03047 ± 0.00299 | 0.17442 ± 0.00847 |
+| Without slow | 84.23 ± 1.29 | 77.89 ± 1.64 | 81.25 ± 1.53 | 85.39 ± 2.22 | 85.30 ± 2.28 | 85.39 ± 2.22 | 0.12845 ± 0.00398 | 0.02504 ± 0.00110 | 0.15822 ± 0.00346 |
+| Fixed 50/50 | 83.42 ± 1.52 | 77.65 ± 2.60 | 80.29 ± 1.81 | 83.00 ± 0.71 | 82.53 ± 0.81 | 83.00 ± 0.71 | 0.12023 ± 0.00579 | 0.02198 ± 0.00241 | 0.14810 ± 0.00827 |
+| Full model | 86.05 ± 1.42 | 80.80 ± 1.61 | 83.42 ± 1.68 | 89.16 ± 5.65 | 88.81 ± 6.01 | 89.16 ± 5.65 | 0.13023 ± 0.00387 | 0.02655 ± 0.00136 | 0.16290 ± 0.00418 |
+
+## Pretraining sources
+
+All checkpoints are matched at 3,134 optimizer updates and use the same Source-Mean offsets. The rows use the full model. FD values are accuracies in percent.
+
+| Pretraining | CWRU 1-shot | CWRU 4-shot | CWRU 8-shot | CWRU 16-shot | UO 1-shot | UO 4-shot | UO 8-shot | UO 16-shot | XJTU MAE | XJTU MSE | XJTU RMSE |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Joint | 86.05 ± 1.42 | 93.39 ± 0.31 | 94.97 ± 0.32 | 95.76 ± 0.37 | 89.16 ± 5.65 | 95.15 ± 0.10 | 96.73 ± 0.47 | 97.78 ± 0.51 | 0.13023 ± 0.00387 | 0.02655 ± 0.00136 | 0.16290 ± 0.00418 |
+| FD only | 74.17 ± 5.05 | 82.97 ± 0.88 | 86.70 ± 0.05 | 88.64 ± 0.34 | 79.46 ± 2.62 | 94.11 ± 0.51 | 92.36 ± 0.62 | 93.40 ± 1.35 | 0.18785 ± 0.00724 | 0.05752 ± 0.00315 | 0.23978 ± 0.00661 |
+| RUL only | 81.18 ± 1.76 | 90.76 ± 0.88 | 91.43 ± 1.00 | 92.73 ± 0.62 | 83.64 ± 4.50 | 94.98 ± 1.36 | 95.08 ± 0.84 | 97.44 ± 0.15 | 0.16929 ± 0.01108 | 0.04548 ± 0.00585 | 0.21298 ± 0.01353 |
+
 ## Figures / 图
 
 ![Temporal/frequency tokenizer](assets/tokenizer.png)
 
-![UO classification example](assets/uo_confusion.png)
+![Tokenizer and backbone routing](assets/routing.png)
+
+![CWRU 4-shot confusion matrices](assets/cwru_confusion.png)
+
+![UO 4-shot confusion matrices](assets/uo_confusion.png)
+
+The confusion matrices pool predictions from three runs and normalize by true class. The pretrained panels use the Source-Mean model. The following plots use earlier models with the original router.
 
 ![CWRU t-SNE example](assets/cwru_tsne.png)
 
 ![RUL errors by bearing](assets/rul_bearing_error.png)
-
-The confusion matrices and t-SNE are manuscript examples from individual runs. RUL error plots were generated on 2026-11-19 using the full-pool three-seed predictions. Figures are descriptive and do not replace aggregate test metrics.

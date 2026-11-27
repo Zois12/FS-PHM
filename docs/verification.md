@@ -1,5 +1,13 @@
 # Export verification / 副本验证
 
+## Source-Mean update
+
+On 2026-11-27, a CPU check applied the fitted offsets to an existing FD-only foundation checkpoint. The resulting checkpoint loaded strictly with the requested uniform-router ablation. The six slow-branch biases matched the recorded offsets exactly, and the other tensors matched the input. The CLI rejected an existing output path and a checkpoint with calibration already recorded.
+
+The XJTU-SY check held out the recorded three trajectories and reproduced the 206,304/14,880 window counts. These were checkpoint and partition checks on CPU. The result tables report the completed GPU experiments.
+
+## Initial export
+
 Verified on 2026-11-23 using Python 3.10, PyTorch 2.5.1 and CPU execution.
 
 - Seven unit/integration tests passed: amplitude scaling, masked variable-length pretraining/backpropagation, RUL masked pooling and head size, frozen foundation/checkpoint round trip, synthetic-H5 pretraining plus FD/power training, RUL interrupted/resumed training with exact weight equality and independent evaluation, and relocated RmGPT pretraining/prompt adaptation.

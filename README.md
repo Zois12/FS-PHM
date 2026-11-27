@@ -8,13 +8,13 @@ FS-PHM converts vibration windows with different sampling rates and channel coun
 
 ![FS-PHM architecture and training stages](docs/assets/architecture.png)
 
-*Architecture figure extracted from the project manuscript. FD uses LoRA and an optional power-spectrum branch. The recommended RUL pipeline freezes the backbone and trains a token-statistics/amplitude fusion regressor. Adaptation is configured separately for the two tasks.*
+*FD uses LoRA and a broadband envelope feature. RUL freezes the backbone and fits a regression head on token and amplitude statistics. The downstream checkpoint includes Source-Mean routing.*
 
 ## Features
 
 - **Physical-time alignment:** typically 0.2 s for FD and 0.1 s for RUL; deformable temporal encoding, FFT and Morlet CWT, with masks for variable lengths and channel counts.
 - **Mixed self-supervised pretraining:** masked time/frequency reconstruction, view contrast, and a monotonicity objective on valid RUL trajectory pairs; optional task/dataset-balanced sampling.
-- **Few-shot diagnosis:** a fixed test partition, K labeled windows per class or a fraction of the training pool, LoRA, linear/cosine heads, and a support-fitted power-spectrum branch.
+- **Few-shot diagnosis:** a fixed test partition, K labeled windows per class or a fraction of the training pool, LoRA and a broadband envelope feature in the paper configuration.
 - **Single-window RUL:** a frozen foundation encoder; token mean/std/max and same-window amplitude descriptors; bounded regression trained with MAE.
 - **Baselines:** CNN-LSTM, Transformer, ResNet18, WDCNN, UniFault, SC-MambaFew, MOMENT/T5, DA-RUL, CNN-BiLSTM, Dual-Mixer, and a separate paper-derived RmGPT implementation.
 
@@ -22,8 +22,8 @@ FS-PHM converts vibration windows with different sampling rates and channel coun
 
 ```text
 FS-PHM/
-├── README.md                       # Chinese
-├── README.en.md                    # English
+├── README.md                       # English
+├── README-zh.md                    # Chinese
 ├── requirements.txt
 ├── model/
 │   ├── architecture.py             # Tokenizer, fast/slow backbone, task wrappers
@@ -43,11 +43,10 @@ FS-PHM/
 │       ├── rmgpt/                 # Architecture, pretraining, prompt/full adaptation
 │       ├── vendor/                # Required upstream modules and provenance
 │       └── hf_configs/            # MOMENT/T5 architecture configs
-├── docs/                           # Figures, results and source notes
-└── tests/                          # Core CPU checks
+└── docs/                           # Figures, results and source notes
 ```
 
-The export retains required normalization, splitting, logging, losses and metrics. Datasets, weights, historical outputs, parameter sweeps and diagnostic scripts are not distributed. `docs/source_manifest.json` records the copied source files and checksums.
+The export retains required normalization, splitting, logging, losses and metrics. Datasets, weights, historical outputs, parameter sweeps and diagnostic scripts are not distributed.
 
 ## Installation
 
@@ -71,8 +70,8 @@ splitData/
 ├── PU_h5/               # FD pretraining
 ├── ims_h5/              # RUL pretraining
 ├── PHM2012_h5/          # RUL pretraining
-├── CWRU_h5/             # Target FD
-├── UO_h5/               # Target FD; 
+├── CWRU_h5_12kdrive/    # Target FD
+├── UO_h5/               # Target FD
 └── XJTU-SY_h5_01/       # Target RUL, 0.1 s
 ```
 
@@ -102,20 +101,25 @@ All budgets must share the same split manifest. Test windows never enter support
 
 ## Pretraining
 
-Example using four GPUs:
+The paper uses one GPU, a batch size of 512, and a 20-epoch cosine schedule. Use the checkpoint saved after epoch 2 for downstream experiments.
 
 ```bash
-torchrun --standalone --nproc_per_node=4 -m model.train_pretrain \
+python -m model.train_pretrain \
   --task all --data-root splitData \
   --root splitData/JNU_h5 --root splitData/PU_h5 \
   --root splitData/ims_h5 --root splitData/PHM2012_h5 \
   --exclude-dataset CWRU --exclude-dataset UO --exclude-dataset XJTU-SY \
   --sampling task-dataset-balanced --fd-sampling-fraction 0.5 \
-  --epochs 10 --batch-size 512 --workers 16 --seed 2026 \
+  --backbone-ablation no-order --epochs 20 --batch-size 512 --workers 16 \
+  --lr 0.0003 --warmup-steps 1000 --seed 42 --device cuda:0 \
   --output runs/fs_phm_pretrain
+
+python -m model.apply_source_mean \
+  --checkpoint runs/fs_phm_pretrain/epoch_0002.pt \
+  --output runs/fs_phm_pretrain/source_mean.pt
 ```
 
-Batch size is per process; effective DDP batch size also includes the number of GPUs and gradient accumulation. For one GPU use `python -m model.train_pretrain ... --device cuda:0`. Progress, configurations, metrics and checkpoints are saved in the output directory. Resume with `--resume runs/fs_phm_pretrain/last.pt`. Sampling defaults to `records`; the example explicitly enables balancing.
+The epoch-2 checkpoint inherits the 20-epoch learning-rate schedule. The calibration command folds the fitted source offsets into a new checkpoint shared by FD and RUL. See [Source-Mean routing](docs/source-mean.md).
 
 ## FD adaptation
 
@@ -124,14 +128,16 @@ python -m model.train_finetune \
   --task fd --root splitData/CWRU_h5_12kdrive --datasets CWRU \
   --split-manifest runs/manifests/cwru_split.json \
   --few-shot-manifest runs/manifests/cwru_4shot.json \
-  --checkpoint runs/fs_phm_pretrain/epoch_0002.pt \
-  --adaptation lora --fd-head linear --fd-pooling mean \
+  --checkpoint runs/fs_phm_pretrain/source_mean.pt \
+  --adaptation lora --lora-rank 8 --lora-alpha 16 \
+  --fd-head linear --fd-pooling mean --fd-head-dropout 0.05 \
+  --fd-envelope --envelope-mode broadband --no-fd-power-spectrum \
   --epochs 50 --batch-size 64 --eval-batch-size 512 \
-  --lr 0.002 --backbone-lr 0.00008 --workers 8 --seed 2026 \
+  --lr 0.002 --backbone-lr 0.00008 --weight-decay 0.01 --warmup-steps 5 --no-amp --workers 8 --seed 2026 \
   --device cuda:0 --max-eval -1 --output runs/cwru_4shot
 ```
 
-Add `--fd-power-spectrum` for the spectral branch. Its standardization and ridge initialization use only the training supports; see `--help` for confidence-gate settings. Use `--fd-head cosine` for a cosine classifier. Switching the support manifest selects other shot counts, 10%, or the complete training pool.
+To train on UO or change the annotation budget, use the corresponding manifests generated in the [fixed split setup](#fixed-fd-partitions-and-support-sets).
 
 The fixed-split protocol trains for the requested number of epochs and then evaluates the full fixed test partition. Metrics are Accuracy, macro F1, macro AUROC and macro Recall. Use a new output for a new setting, or `--resume <downstream checkpoint>` for continuation.
 
@@ -142,7 +148,7 @@ The fixed-split protocol trains for the requested number of epochs and then eval
 ```bash
 python -m model.train_rul_frozen \
   --root splitData/XJTU-SY_h5_01 \
-  --checkpoint runs/fs_phm_pretrain/epoch_0002.pt \
+  --checkpoint runs/fs_phm_pretrain/source_mean.pt \
   --split-seed 2026 --seed 2026 --sampling-seed 2026 \
   --epochs 50 --batch-size 64 --workers 8 --device cuda:0 \
   --output runs/xjtu_frozen/seed_2026
@@ -160,7 +166,7 @@ Resume and evaluate:
 # Retain the original training arguments when resuming.
 python -m model.train_rul_frozen \
   --root splitData/XJTU-SY_h5_01 \
-  --checkpoint runs/fs_phm_pretrain/epoch_0002.pt \
+  --checkpoint runs/fs_phm_pretrain/source_mean.pt \
   --workers 8 --device cuda:0 --resume --output runs/xjtu_frozen/seed_2026
 
 # final.pt includes the complete foundation, head and normalization buffers.
@@ -231,35 +237,33 @@ Use `--adaptation full` for full-parameter adaptation. The paper-derived RmGPT i
 
 ## Reference results
 
-These are existing experiment records, not new training runs of this export. FD Accuracy (%) is taken from the supplied manuscript and reported as mean ± standard deviation across three training seeds:
+Results use Source-Mean routing and report the mean ± sample standard deviation across three training runs on fixed test partitions. FD accuracy is in percent.
 
 | Dataset / model | 1-shot | 4-shot | 8-shot | 16-shot | 10% | Full |
 |---|---:|---:|---:|---:|---:|---:|
-| CWRU · FS-PHM | 87.77 ± 0.25 | 93.29 ± 0.21 | 94.57 ± 0.13 | 95.29 ± 0.29 | 97.21 ± 0.05 | 99.02 ± 0.08 |
-| CWRU · + Power Spectrum | 94.15 ± 1.96 | 99.72 ± 0.39 | 99.98 ± 0.03 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
-| UO · FS-PHM | 79.09 ± 1.31 | 93.74 ± 1.14 | 96.33 ± 0.76 | 97.64 ± 0.62 | 99.43 ± 0.15 | 99.97 ± 0.06 |
-| UO · + Power Spectrum | 89.12 ± 4.25 | 99.93 ± 0.06 | 99.93 ± 0.06 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| CWRU · FS-PHM | 86.05 ± 1.42 | 93.39 ± 0.31 | 94.97 ± 0.32 | 95.76 ± 0.37 | 97.23 ± 0.13 | 99.11 ± 0.00 |
+| UO · FS-PHM | 89.16 ± 5.65 | 95.15 ± 0.10 | 96.73 ± 0.47 | 97.78 ± 0.51 | 99.26 ± 0.06 | 99.83 ± 0.06 |
 
 | XJTU-SY full training pool | MAE ↓ | MSE ↓ | RMSE ↓ |
 |---|---:|---:|---:|
-| FS-PHM frozen fusion regressor | 0.13158 ± 0.00163 | 0.02624 ± 0.00087 | 0.16196 ± 0.00269 |
+| FS-PHM frozen fusion regressor | 0.13023 ± 0.00387 | 0.02655 ± 0.00136 | 0.16290 ± 0.00418 |
 
-RUL metrics are computed on the complete fixed TEST for each training seed, then summarized across 2026/2027/2028 with sample standard deviation. The deviation is not the spread of individual window errors. Exact reproduction requires the original weights, data version and split/support manifests, which are not included.
+Exact reproduction requires the original FD splits, support sets, data version and foundation weights.
 
 ![CWRU confusion matrix comparison](docs/assets/cwru_confusion.png)
 
-*Manuscript example: no pretraining, pretraining, and pretraining plus power spectrum. A single-run visualization does not replace the multi-seed aggregate.*
+*CWRU 4-shot predictions pooled across three runs and normalized by true class. The pretrained model uses Source-Mean routing.*
 
 ![RUL error across lifetime stages](docs/assets/rul_lifetime_stage_error.png)
 
-*RUL error analysis generated this month. Stages use true normalized RUL intervals and do not identify fault onset.*
+*This diagnostic uses an earlier RUL model with the original router. The stages are defined by true normalized RUL.*
 
 More tables, figures and provenance: [results](docs/results.md).
 
 ## Verification and execution
 
 ```bash
-python -m unittest discover -s tests -v
+python -m model.apply_source_mean --help
 python -m model.train_pretrain --help
 python -m model.train_finetune --help
 python -m model.train_rul_frozen --help

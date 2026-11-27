@@ -8,13 +8,13 @@ FS-PHM 将不同采样率、多通道振动窗口转换为物理时长对齐的 
 
 ![FS-PHM 总体架构与两阶段训练](docs/assets/architecture.png)
 
-*总体架构图提取自项目论文。FD 使用 LoRA 与可选功率谱旁路；本文档推荐的 RUL 流程冻结主干，训练 token 统计特征与幅值特征融合的回归头。两类任务的适配方式分别配置。*
+*FD 使用 LoRA 和宽带包络特征。RUL 冻结主干，使用 token 统计量与幅值特征训练回归头。两项任务共用经过 Source-Mean 校准的下游初始化权重。*
 
 ## 功能
 
 - **物理时间对齐**：FD 窗口通常为 0.2 s，RUL 为 0.1 s；可变形时域编码、FFT 与 Morlet CWT 融合，有效性掩码支持不同长度和通道数。
 - **混合自监督预训练**：掩码时频重构、增强视图对比和有效 RUL 轨迹对的单调约束；支持 FD/RUL 与任务内数据集均衡采样。
-- **少样本诊断**：固定测试集，训练池内抽取每类 K 个窗口或指定比例；LoRA、线性/余弦分类头及支持集拟合的功率谱旁路。
+- **少样本诊断**：固定测试集，训练池内抽取每类 K 个窗口或指定比例；论文配置使用 LoRA、线性分类头和宽带包络特征。
 - **单窗口 RUL**：冻结预训练主干，融合 token 的均值、标准差、最大值与同窗幅值统计，采用 MAE 训练有界回归头。
 - **对比模型**：CNN-LSTM、Transformer、ResNet18、WDCNN、UniFault、SC-MambaFew、MOMENT/T5、DA-RUL、CNN-BiLSTM、Dual-Mixer，以及独立的 RmGPT 论文结构实现。
 
@@ -22,8 +22,8 @@ FS-PHM 将不同采样率、多通道振动窗口转换为物理时长对齐的 
 
 ```text
 FS-PHM/
-├── README.md                       # 中文
-├── README.en.md                    # English
+├── README.md                       # English
+├── README-zh.md                    # 中文
 ├── requirements.txt                # 主模型和对比模型的通用依赖
 ├── model/
 │   ├── architecture.py             # Tokenizer、双分支主干、FD/通用 RUL 头
@@ -43,11 +43,10 @@ FS-PHM/
 │       ├── rmgpt/                 # RmGPT 架构、预训练、prompt/full 微调
 │       ├── vendor/                # 实际使用的上游模块及出处
 │       └── hf_configs/            # MOMENT/T5 架构配置
-├── docs/                           # 图、结果与来源说明
-└── tests/                          # 核心 CPU 验证
+└── docs/                           # 图、结果与来源说明
 ```
 
-保留训练运行所需的归一化、划分、日志、损失和指标工具。原始数据、权重、历史运行输出、调参矩阵和诊断脚本不随此代码副本分发。`docs/source_manifest.json` 记录复制来源和校验信息。
+保留训练运行所需的归一化、划分、日志、损失和指标工具。原始数据、权重、历史运行输出、调参矩阵和诊断脚本不随此代码副本分发。
 
 ## 安装
 
@@ -71,7 +70,7 @@ splitData/
 ├── PU_h5/               # 预训练 FD
 ├── ims_h5/              # 预训练 RUL
 ├── PHM2012_h5/          # 预训练 RUL
-├── CWRU_h5/             # 下游 FD
+├── CWRU_h5_12kdrive/    # 下游 FD
 ├── UO_h5/               # 下游 FD，可包含类别子目录
 └── XJTU-SY_h5_01/       # 下游 RUL，0.1 s
 ```
@@ -102,20 +101,25 @@ python -m model.make_few_shot \
 
 ## 预训练
 
-四卡混合预训练示例：
+论文使用单卡、batch size 512 和 20 轮余弦日程，取第 2 轮检查点继续下游实验。
 
 ```bash
-torchrun --standalone --nproc_per_node=4 -m model.train_pretrain \
+python -m model.train_pretrain \
   --task all --data-root splitData \
   --root splitData/JNU_h5 --root splitData/PU_h5 \
   --root splitData/ims_h5 --root splitData/PHM2012_h5 \
   --exclude-dataset CWRU --exclude-dataset UO --exclude-dataset XJTU-SY \
   --sampling task-dataset-balanced --fd-sampling-fraction 0.5 \
-  --epochs 10 --batch-size 512 --workers 16 --seed 2026 \
+  --backbone-ablation no-order --epochs 20 --batch-size 512 --workers 16 \
+  --lr 0.0003 --warmup-steps 1000 --seed 42 --device cuda:0 \
   --output runs/fs_phm_pretrain
+
+python -m model.apply_source_mean \
+  --checkpoint runs/fs_phm_pretrain/epoch_0002.pt \
+  --output runs/fs_phm_pretrain/source_mean.pt
 ```
 
-`--batch-size` 是每个进程的 batch size，DDP 的有效总 batch 还要乘卡数和梯度累积次数。单卡使用 `python -m model.train_pretrain ... --device cuda:0`。进度、配置、指标和检查点保存在输出目录；用 `--resume runs/fs_phm_pretrain/last.pt` 续训。预训练默认采样方式为 `records`，上述命令显式开启均衡采样。
+第 2 轮快照沿用 20 轮学习率日程。校准命令将已经拟合的源域偏移写入新的检查点，供 FD 和 RUL 共用。详见 [Source-Mean 路由](docs/source-mean.md)。
 
 ## FD 微调
 
@@ -124,14 +128,16 @@ python -m model.train_finetune \
   --task fd --root splitData/CWRU_h5_12kdrive --datasets CWRU \
   --split-manifest runs/manifests/cwru_split.json \
   --few-shot-manifest runs/manifests/cwru_4shot.json \
-  --checkpoint runs/fs_phm_pretrain/epoch_0002.pt \
-  --adaptation lora --fd-head linear --fd-pooling mean \
+  --checkpoint runs/fs_phm_pretrain/source_mean.pt \
+  --adaptation lora --lora-rank 8 --lora-alpha 16 \
+  --fd-head linear --fd-pooling mean --fd-head-dropout 0.05 \
+  --fd-envelope --envelope-mode broadband --no-fd-power-spectrum \
   --epochs 50 --batch-size 64 --eval-batch-size 512 \
-  --lr 0.002 --backbone-lr 0.00008 --workers 8 --seed 2026 \
+  --lr 0.002 --backbone-lr 0.00008 --weight-decay 0.01 --warmup-steps 5 --no-amp --workers 8 --seed 2026 \
   --device cuda:0 --max-eval -1 --output runs/cwru_4shot
 ```
 
-加入 `--fd-power-spectrum` 启用功率谱旁路；谱标准化与岭回归初始化只使用训练支持集。其置信度门控参数可通过 `--help` 查看。`--fd-head cosine` 启用余弦头。切换支持集文件即可训练其他 shot、10% 或整个 80% 训练池。
+训练 UO 或切换标注预算时，使用按[固定 FD 测试集与支持集](#固定-fd-测试集与支持集)一节生成的相应清单。
 
 固定划分协议下按指定轮数训练后评估完整固定测试集，指标为 Accuracy、宏 F1、宏 AUROC、宏 Recall。用新的输出目录比较不同设置；续训用 `--resume <下游检查点>`。
 
@@ -142,7 +148,7 @@ python -m model.train_finetune \
 ```bash
 python -m model.train_rul_frozen \
   --root splitData/XJTU-SY_h5_01 \
-  --checkpoint runs/fs_phm_pretrain/epoch_0002.pt \
+  --checkpoint runs/fs_phm_pretrain/source_mean.pt \
   --split-seed 2026 --seed 2026 --sampling-seed 2026 \
   --epochs 50 --batch-size 64 --workers 8 --device cuda:0 \
   --output runs/xjtu_frozen/seed_2026
@@ -160,7 +166,7 @@ RUL 按完整轴承轨迹划分。原固定清单对应 12 个训练轴承、3 �
 # 续训时保留原训练命令的其余参数，并追加 --resume。
 python -m model.train_rul_frozen \
   --root splitData/XJTU-SY_h5_01 \
-  --checkpoint runs/fs_phm_pretrain/epoch_0002.pt \
+  --checkpoint runs/fs_phm_pretrain/source_mean.pt \
   --workers 8 --device cuda:0 --resume --output runs/xjtu_frozen/seed_2026
 
 # 本入口的 final.pt 已保存完整主干、任务头和归一化参数。
@@ -231,35 +237,33 @@ python -m model.paper_baselines.rmgpt.finetune \
 
 ## 参考结果与可视化
 
-以下为现有实验记录，非本精简副本重新训练的结果。FD 数值来自所提供论文的当前版本，单位为 Accuracy %，报告三个训练种子的均值 ± 标准差：
+以下为三个训练种子在固定测试集上得到的均值 ± 样本标准差。FS-PHM 使用 Source-Mean 路由。FD 指标为准确率（%）。
 
 | 数据集与模型 | 1-shot | 4-shot | 8-shot | 16-shot | 10% | Full |
 |---|---:|---:|---:|---:|---:|---:|
-| CWRU · FS-PHM | 87.77 ± 0.25 | 93.29 ± 0.21 | 94.57 ± 0.13 | 95.29 ± 0.29 | 97.21 ± 0.05 | 99.02 ± 0.08 |
-| CWRU · + Power Spectrum | 94.15 ± 1.96 | 99.72 ± 0.39 | 99.98 ± 0.03 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
-| UO · FS-PHM | 79.09 ± 1.31 | 93.74 ± 1.14 | 96.33 ± 0.76 | 97.64 ± 0.62 | 99.43 ± 0.15 | 99.97 ± 0.06 |
-| UO · + Power Spectrum | 89.12 ± 4.25 | 99.93 ± 0.06 | 99.93 ± 0.06 | 100.00 ± 0.00 | 100.00 ± 0.00 | 100.00 ± 0.00 |
+| CWRU · FS-PHM | 86.05 ± 1.42 | 93.39 ± 0.31 | 94.97 ± 0.32 | 95.76 ± 0.37 | 97.23 ± 0.13 | 99.11 ± 0.00 |
+| UO · FS-PHM | 89.16 ± 5.65 | 95.15 ± 0.10 | 96.73 ± 0.47 | 97.78 ± 0.51 | 99.26 ± 0.06 | 99.83 ± 0.06 |
 
 | XJTU-SY 全训练池 | MAE ↓ | MSE ↓ | RMSE ↓ |
 |---|---:|---:|---:|
-| FS-PHM 冻结主干融合回归 | 0.13158 ± 0.00163 | 0.02624 ± 0.00087 | 0.16196 ± 0.00269 |
+| FS-PHM 冻结主干融合回归 | 0.13023 ± 0.00387 | 0.02655 ± 0.00136 | 0.16290 ± 0.00418 |
 
-RUL 在完整固定 TEST 上分别计算每次训练的指标，再对 seed 2026/2027/2028 求均值和样本标准差；不是窗口误差的标准差。复现这些数值需要原预训练权重、数据版本及 split/support，代码副本不包含它们。
+精确复现论文结果需要原始 FD 划分、支持集、对应数据版本和预训练权重。
 
 ![CWRU 分类混淆矩阵对照](docs/assets/cwru_confusion.png)
 
-*论文中的 CWRU 混淆矩阵示例，分别为无预训练、预训练及预训练加功率谱。它展示某次运行，不替代多种子的均值结果。*
+*CWRU 4-shot 混淆矩阵汇总三次训练的预测，按真实类别归一化。预训练模型使用 Source-Mean 路由。*
 
 ![RUL 在各寿命阶段的误差](docs/assets/rul_lifetime_stage_error.png)
 
-*本月生成的 RUL 阶段误差统计图。阶段按真实归一化 RUL 分段，不表示已识别故障起点。*
+*该图基于原路由的早期 RUL 实验，按真实归一化 RUL 划分阶段。*
 
 更多表格、图和来源见 [结果与图表](docs/results.md)。
 
 ## 验证与运行边界
 
 ```bash
-python -m unittest discover -s tests -v
+python -m model.apply_source_mean --help
 python -m model.train_pretrain --help
 python -m model.train_finetune --help
 python -m model.train_rul_frozen --help
